@@ -24,7 +24,7 @@
         }
     </style>
 </head>
-<body style="background-color: #c7f7f7;">
+<body>
     <div class="container mt-4">
         <h2 class="text-center mb-4">Estado de Tareas - Empresa</h2>
         <table id="statusTable" class="table table-bordered table-hover table-clickable">
@@ -174,119 +174,122 @@
         const db = firebase.database();
         const tableRef = db.ref('tableState'); // Nodo donde se guarda el estado
 
-        const table = document.getElementById('statusTable');
-        const tbody = table.getElementsByTagName('tbody')[0];
-        const cells = tbody.getElementsByTagName('td');
+        window.onload = function() {
+            const table = document.getElementById('statusTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const cells = tbody.getElementsByTagName('td');
 
-        // Cargar datos de Firebase al iniciar (en tiempo real)
-        function loadState() {
-            tableRef.on('value', (snapshot) => {
-                const state = snapshot.val() || {};
-                for (let i = 0; i < tbody.rows.length; i++) {
-                    const rowCells = tbody.rows[i].cells;
-                    for (let j = 2; j < rowCells.length; j++) {
-                        const key = `${i}-${j}`;
-                        const value = state[key];
-                        const cell = rowCells[j];
-                        if (value === 'check') {
-                            cell.innerHTML = '<i class="fas fa-check check"></i>';
-                            cell.classList.add('check');
-                            cell.classList.remove('cross');
-                        } else if (value === 'cross') {
-                            cell.innerHTML = '<i class="fas fa-times cross"></i>';
-                            cell.classList.add('cross');
-                            cell.classList.remove('check');
+            // Cargar datos de Firebase al iniciar (en tiempo real)
+            function loadState() {
+                tableRef.on('value', (snapshot) => {
+                    const state = snapshot.val() || {};
+                    for (let i = 0; i < tbody.rows.length; i++) {
+                        const rowCells = tbody.rows[i].cells;
+                        for (let j = 2; j < rowCells.length; j++) {
+                            const key = `${i}-${j}`;
+                            const value = state[key];
+                            const cell = rowCells[j];
+                            if (value === 'check') {
+                                cell.innerHTML = '<i class="fas fa-check check"></i>';
+                                cell.classList.add('check');
+                                cell.classList.remove('cross');
+                            } else if (value === 'cross') {
+                                cell.innerHTML = '<i class="fas fa-times cross"></i>';
+                                cell.classList.add('cross');
+                                cell.classList.remove('check');
+                            } else {
+                                cell.innerHTML = '';
+                                cell.classList.remove('check', 'cross');
+                            }
+                        }
+                    }
+                }, (error) => {
+                    console.error("Error loading state:", error);
+                });
+            }
+
+            // Guardar estado al hacer clic
+            for (let cell of cells) {
+                if (cell.cellIndex > 1) {
+                    cell.addEventListener('click', function() {
+                        console.log('Click registered on cell', this.cellIndex, 'of row', Array.from(tbody.rows).indexOf(this.parentElement));
+                        const row = this.parentElement;
+                        const rowIndex = Array.from(tbody.rows).indexOf(row);
+                        const cellIndex = this.cellIndex;
+                        const key = `${rowIndex}-${cellIndex}`;
+                        let value;
+                        if (this.classList.contains('check')) {
+                            this.innerHTML = '<i class="fas fa-times cross"></i>';
+                            this.classList.remove('check');
+                            this.classList.add('cross');
+                            value = 'cross';
+                        } else if (this.classList.contains('cross')) {
+                            this.innerHTML = '';
+                            this.classList.remove('cross');
+                            value = '';
                         } else {
-                            cell.innerHTML = '';
-                            cell.classList.remove('check', 'cross');
+                            this.innerHTML = '<i class="fas fa-check check"></i>';
+                            this.classList.add('check');
+                            value = 'check';
+                        }
+                        // Guardar en Firebase inmediatamente después del cambio
+                        tableRef.child(key).set(value)
+                            .then(() => console.log(`Saved ${key}: ${value}`))
+                            .catch((error) => console.error(`Error saving ${key}:`, error));
+                    });
+                }
+            }
+
+            // Generar reporte
+            document.getElementById('generateReportBtn').addEventListener('click', function() {
+                const report = {};
+                const headers = Array.from(table.rows[1].cells).slice(2); // Segunda fila de encabezados
+
+                for (let i = 0; i < tbody.rows.length; i++) {
+                    const controller = tbody.rows[i].cells[0].textContent;
+                    const supervisor = tbody.rows[i].cells[1].textContent;
+                    const statuses = Array.from(tbody.rows[i].cells).slice(2).map(cell => cell.className);
+
+                    headers.forEach((header, index) => {
+                        if (statuses[index] === 'cross') {
+                            const sectionMap = {
+                                'Recibo': 'RETAIL',
+                                'Encuestas': 'SIDERPERÚ',
+                                'Compras': 'SIDERPERÚ',
+                                'Material POP': 'SIDERPERÚ',
+                                'Recibidas': 'OBRAS',
+                                'Enviadas': 'OBRAS',
+                                'Recibido': index === 8 ? 'PRECIOS' : (index === 10 ? 'INDEPENDIENTES' : (index === 12 ? 'PLANNING' : '')),
+                                'Enviado': index === 9 ? 'PRECIOS' : (index === 11 ? 'INDEPENDIENTES' : (index === 13 ? 'PLANNING' : ''))
+                            };
+                            const section = sectionMap[header.textContent];
+                            if (section) {
+                                const fullHeader = `${section} ${header.textContent}`;
+                                if (!report[fullHeader]) report[fullHeader] = {};
+                                if (!report[fullHeader][controller]) report[fullHeader][controller] = [];
+                                report[fullHeader][controller].push(supervisor);
+                            }
+                        }
+                    });
+                }
+
+                let reportHtml = '<h4 class="text-center">Reporte de Faltantes:</h4>';
+                if (Object.keys(report).length === 0) {
+                    reportHtml += '<p class="text-center text-success">No hay elementos faltantes.</p>';
+                } else {
+                    for (let header in report) {
+                        for (let controller in report[header]) {
+                            const supervisors = report[header][controller].join(', ');
+                            reportHtml += `<p>Falta <strong>${header}</strong> de ${controller} faltan los supervisores: ${supervisors}</p>`;
                         }
                     }
                 }
-            }, (error) => {
-                console.error("Error loading state:", error);
+                document.getElementById('report').innerHTML = reportHtml;
             });
-        }
 
-        // Guardar estado al hacer clic
-        for (let cell of cells) {
-            if (cell.cellIndex > 1) {
-                cell.addEventListener('click', function() {
-                    const row = this.parentElement;
-                    const rowIndex = Array.from(tbody.rows).indexOf(row); // Índice correcto dentro del tbody
-                    const cellIndex = this.cellIndex;
-                    const key = `${rowIndex}-${cellIndex}`;
-                    let value;
-                    if (this.classList.contains('check')) {
-                        this.innerHTML = '<i class="fas fa-times cross"></i>';
-                        this.classList.remove('check');
-                        this.classList.add('cross');
-                        value = 'cross';
-                    } else if (this.classList.contains('cross')) {
-                        this.innerHTML = '';
-                        this.classList.remove('cross');
-                        value = '';
-                    } else {
-                        this.innerHTML = '<i class="fas fa-check check"></i>';
-                        this.classList.add('check');
-                        value = 'check';
-                    }
-                    // Guardar en Firebase inmediatamente después del cambio
-                    tableRef.child(key).set(value)
-                        .then(() => console.log(`Saved ${key}: ${value}`))
-                        .catch((error) => console.error(`Error saving ${key}:`, error));
-                });
-            }
-        }
-
-        // Generar reporte
-        document.getElementById('generateReportBtn').addEventListener('click', function() {
-            const report = {};
-            const headers = Array.from(table.rows[1].cells).slice(2); // Segunda fila de encabezados
-
-            for (let i = 0; i < tbody.rows.length; i++) {
-                const controller = tbody.rows[i].cells[0].textContent;
-                const supervisor = tbody.rows[i].cells[1].textContent;
-                const statuses = Array.from(tbody.rows[i].cells).slice(2).map(cell => cell.className);
-
-                headers.forEach((header, index) => {
-                    if (statuses[index] === 'cross') { // Solo procesa las casillas con X
-                        const sectionMap = {
-                            'Recibo': 'RETAIL',
-                            'Encuestas': 'SIDERPERÚ',
-                            'Compras': 'SIDERPERÚ',
-                            'Material POP': 'SIDERPERÚ',
-                            'Recibidas': 'OBRAS',
-                            'Enviadas': 'OBRAS',
-                            'Recibido': index === 8 ? 'PRECIOS' : (index === 10 ? 'INDEPENDIENTES' : (index === 12 ? 'PLANNING' : '')),
-                            'Enviado': index === 9 ? 'PRECIOS' : (index === 11 ? 'INDEPENDIENTES' : (index === 13 ? 'PLANNING' : ''))
-                        };
-                        const section = sectionMap[header.textContent];
-                        if (section) {
-                            const fullHeader = `${section} ${header.textContent}`;
-                            if (!report[fullHeader]) report[fullHeader] = {};
-                            if (!report[fullHeader][controller]) report[fullHeader][controller] = [];
-                            report[fullHeader][controller].push(supervisor);
-                        }
-                    }
-                });
-            }
-
-            let reportHtml = '<h4 class="text-center">Reporte de Faltantes:</h4>';
-            if (Object.keys(report).length === 0) {
-                reportHtml += '<p class="text-center text-success">No hay elementos faltantes.</p>';
-            } else {
-                for (let header in report) {
-                    for (let controller in report[header]) {
-                        const supervisors = report[header][controller].join(', ');
-                        reportHtml += `<p>Falta <strong>${header}</strong> de ${controller} faltan los supervisores: ${supervisors}</p>`;
-                    }
-                }
-            }
-            document.getElementById('report').innerHTML = reportHtml;
-        });
-
-        // Cargar estado al iniciar la página
-        loadState();
+            // Cargar estado al iniciar la página
+            loadState();
+        };
     </script>
 </body>
 </html>
