@@ -3,16 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba</title>
-    <!-- Firebase SDK (no modular) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <title>Tabla Interactiva - Empresa</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .table-clickable td {
+            cursor: pointer;
+        }
+        .check { color: green; }
+        .cross { color: red; }
+        #report { margin-top: 20px; }
+        .section-header {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Prueba de Firebase</h1>
-    <button onclick="testFirebase()">Probar Firebase</button>
-    <script>
-        console.log('Script started');
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Estado de Tareas - Empresa</h2>
+        <div id="loadingIndicator" class="text-center mb-3">
+            <span class="loading"></span> Cargando datos...
+        </div>
+        <table id="statusTable" class="table table-bordered table-hover table-clickable" style="display: none;">
+            <thead>
+                <tr class="section-header">
+                    <th colspan="2"></th>
+                    <th colspan="1" style="background-color: #c3e6cb;">RETAIL</th>
+                    <th colspan="3" style="background-color: #ffcccc;">SIDERPERÚ</th>
+                    <th colspan="2" style="background-color: #cce5ff;">OBRAS</th>
+                    <th colspan="2" style="background-color: #e6cce6;">PRECIOS</th>
+                    <th colspan="2" style="background-color: #cceeff;">INDEPENDIENTES</th>
+                    <th colspan="2" style="background-color: #ffe6cc;">PLANNING</th>
+                </tr>
+                <tr>
+                    <th>Controller</th>
+                    <th>Supervisor</th>
+                    <th>Recibo</th>
+                    <th>Encuestas</th>
+                    <th>Compras</th>
+                    <th>Material POP</th>
+                    <th>Recibidas</th>
+                    <th>Enviadas</th>
+                    <th>Recibido</th>
+                    <th>Enviado</th>
+                    <th>Recibido</th>
+                    <th>Enviado</th>
+                    <th>Recibido</th>
+                    <th>Enviado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Elizabeth Cristina Llallicco Lopez</td>
+                    <td>Aydee Teofila Humaran Iasto</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Elizabeth Cristina Llallicco Lopez</td>
+                    <td>Deborah Caballero Gutierrez</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                    <td>GICELA MARLENI PICHILINGUE MORENO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                    <td>JACKELINE TATIANA CHERRES BRUNO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                    <td>JOSE MANUEL INOÑAN VALDIVIEZO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                    <td>LUCERO ELIZABETH MALAVER TAFUR</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                    <td>PILAR GRACIELA DOROTEO ALVARADO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>CARMEN MARTHA BENITEZ CUCHO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>LUZMILA ANTONIO GARCIA</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>MARLENY ROSALIA PEREZ SOLANO</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>NANCY KARINA ORE HUAYTALLA</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>SUSAN CARLA NEYRA ANCHANTTE</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>KAREN YEMIMA TAMI PISCOYA</td>
+                    <td>YVETTE YVONNE HERNANDEZ COLAN</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>CESAR LUIS PANDURO MELENDEZ</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>DAYSI CARINA MORON ALMENGOR</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>FRANCIS PAUL RIOS ZUÑIGA</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>HENRY DAVID LOPEZ REATEGUI</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>MARICARMEN AYALA ELME</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button id="generateReportBtn" class="btn btn-primary">Generar Reporte</button>
+        </div>
+        <div id="report" class="mt-4"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        // Tu configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDC2HMJe8BSHoGRTIthn25c0HWLKM0QrYA",
             authDomain: "status-uncaem.firebaseapp.com",
@@ -24,20 +186,140 @@
             measurementId: "G-L96KP4TW01"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const testRef = db.ref('test');
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const tableRef = ref(database, 'tableState');
 
-        function testFirebase() {
-            console.log('Button clicked');
-            testRef.set({ message: 'Test successful' })
-                .then(() => console.log('Data saved to Firebase'))
-                .catch((error) => console.error('Error saving to Firebase:', error));
+        const table = document.getElementById('statusTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        // Mostrar la tabla cuando los datos estén listos
+        function showTable() {
+            table.style.display = 'table';
+            loadingIndicator.style.display = 'none';
         }
 
-        window.onload = function() {
-            console.log('Window loaded');
-        };
+        // Cargar datos desde Firebase
+        function loadState() {
+            onValue(tableRef, (snapshot) => {
+                const state = snapshot.val();
+                
+                if (state) {
+                    for (let i = 0; i < tbody.rows.length; i++) {
+                        const rowCells = tbody.rows[i].cells;
+                        for (let j = 2; j < rowCells.length; j++) {
+                            const key = `${i}-${j}`;
+                            if (state[key] === 'check') {
+                                rowCells[j].innerHTML = '<i class="fas fa-check check"></i>';
+                                rowCells[j].classList.add('check');
+                            } else if (state[key] === 'cross') {
+                                rowCells[j].innerHTML = '<i class="fas fa-times cross"></i>';
+                                rowCells[j].classList.add('cross');
+                            } else {
+                                rowCells[j].innerHTML = '';
+                                rowCells[j].classList.remove('check', 'cross');
+                            }
+                        }
+                    }
+                }
+                showTable();
+            }, {
+                onlyOnce: false // Escuchar cambios en tiempo real
+            });
+        }
+
+        // Configurar eventos de clic para las celdas
+        function setupCellClickEvents() {
+            const cells = tbody.getElementsByTagName('td');
+            
+            for (let cell of cells) {
+                if (cell.cellIndex > 1) { // Solo las celdas de estado (no nombres)
+                    cell.addEventListener('click', function() {
+                        const row = this.parentElement;
+                        const rowIndex = Array.from(tbody.rows).indexOf(row);
+                        const cellIndex = this.cellIndex;
+                        const key = `${rowIndex}-${cellIndex}`;
+                        
+                        if (this.classList.contains('check')) {
+                            this.innerHTML = '<i class="fas fa-times cross"></i>';
+                            this.classList.remove('check');
+                            this.classList.add('cross');
+                            saveState(key, 'cross');
+                        } else if (this.classList.contains('cross')) {
+                            this.innerHTML = '';
+                            this.classList.remove('cross');
+                            saveState(key, '');
+                        } else {
+                            this.innerHTML = '<i class="fas fa-check check"></i>';
+                            this.classList.add('check');
+                            saveState(key, 'check');
+                        }
+                    });
+                }
+            }
+        }
+
+        // Guardar estado en Firebase
+        function saveState(key, value) {
+            set(ref(database, `tableState/${key}`), value)
+                .catch((error) => {
+                    console.error("Error al guardar en Firebase:", error);
+                    alert("Error al guardar los cambios. Por favor recarga la página.");
+                });
+        }
+
+        // Generar reporte
+        document.getElementById('generateReportBtn').addEventListener('click', function() {
+            const report = {};
+            const headers = Array.from(table.rows[1].cells).slice(2); // Segunda fila de encabezados
+
+            for (let i = 0; i < tbody.rows.length; i++) {
+                const controller = tbody.rows[i].cells[0].textContent;
+                const supervisor = tbody.rows[i].cells[1].textContent;
+                const statuses = Array.from(tbody.rows[i].cells).slice(2).map(cell => cell.className);
+
+                headers.forEach((header, index) => {
+                    if (statuses[index] === 'cross') { // Solo procesa las casillas con X
+                        const sectionMap = {
+                            'Recibo': 'RETAIL',
+                            'Encuestas': 'SIDERPERÚ',
+                            'Compras': 'SIDERPERÚ',
+                            'Material POP': 'SIDERPERÚ',
+                            'Recibidas': 'OBRAS',
+                            'Enviadas': 'OBRAS',
+                            'Recibido': index === 8 ? 'PRECIOS' : (index === 10 ? 'INDEPENDIENTES' : (index === 12 ? 'PLANNING' : '')),
+                            'Enviado': index === 9 ? 'PRECIOS' : (index === 11 ? 'INDEPENDIENTES' : (index === 13 ? 'PLANNING' : ''))
+                        };
+                        const section = sectionMap[header.textContent];
+                        if (section) {
+                            const fullHeader = `${section} ${header.textContent}`;
+                            if (!report[fullHeader]) report[fullHeader] = {};
+                            if (!report[fullHeader][controller]) report[fullHeader][controller] = [];
+                            report[fullHeader][controller].push(supervisor);
+                        }
+                    }
+                });
+            }
+
+            let reportHtml = '<h4 class="text-center">Reporte de Faltantes:</h4>';
+            if (Object.keys(report).length === 0) {
+                reportHtml += '<p class="text-center text-success">No hay elementos faltantes.</p>';
+            } else {
+                for (let header in report) {
+                    for (let controller in report[header]) {
+                        const supervisors = report[header][controller].join(', ');
+                        reportHtml += `<p>Falta <strong>${header}</strong> de ${controller} faltan los supervisores: ${supervisors}</p>`;
+                    }
+                }
+            }
+            document.getElementById('report').innerHTML = reportHtml;
+        });
+
+        // Inicializar la aplicación
+        setupCellClickEvents();
+        loadState();
     </script>
 </body>
 </html>
