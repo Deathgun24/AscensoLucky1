@@ -31,15 +31,41 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        .report-section {
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .report-header {
+            font-weight: bold;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .report-item {
+            margin-bottom: 5px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .report-supervisors {
+            font-style: italic;
+            color: #6c757d;
+        }
     </style>
 </head>
-<body style="background-color: #ab49cc;" >
+<body style="background-color: #ab49cc;">
     <div class="container mt-4">
-        <h2 class="text-center mb-4" style="color: rgb(244, 244, 244);">STATUS UNACEM-LUCKY</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0" style="color: rgb(244, 244, 244);">STATUS UNACEM-LUCKY</h2>
+            <h4 class="mb-0" style="color: rgb(244, 244, 244);" id="currentDate"></h4>
+        </div>
         <div id="loadingIndicator" class="text-center mb-3">
             <span class="loading"></span> Cargando datos...
         </div>
-        <table id="statusTable" class="table table-bordered table-hover table-clickable" style="display: none;">
+        <table id="statusTable" class="table table-bordered table-hover table-clickable" style="display: none; background-color: white;">
             <thead>
                 <tr class="section-header">
                     <th colspan="2"></th>
@@ -69,12 +95,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Elizabeth Cristina Llallicco Lopez</td>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
                     <td>Aydee Teofila Humaran Iasto</td>
                     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 </tr>
                 <tr>
-                    <td>Elizabeth Cristina Llallicco Lopez</td>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
                     <td>Deborah Caballero Gutierrez</td>
                     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 </tr>
@@ -144,7 +170,7 @@
                     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 </tr>
                 <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
                     <td>FRANCIS PAUL RIOS ZUÑIGA</td>
                     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 </tr>
@@ -158,6 +184,7 @@
                     <td>MARICARMEN AYALA ELME</td>
                     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 </tr>
+                <!-- Resto de las filas... -->
             </tbody>
         </table>
         <div class="text-center">
@@ -174,7 +201,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-        // Tu configuración de Firebase
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDC2HMJe8BSHoGRTIthn25c0HWLKM0QrYA",
             authDomain: "status-uncaem.firebaseapp.com",
@@ -194,6 +221,14 @@
         const table = document.getElementById('statusTable');
         const tbody = table.getElementsByTagName('tbody')[0];
         const loadingIndicator = document.getElementById('loadingIndicator');
+        const currentDateElement = document.getElementById('currentDate');
+
+        // Mostrar fecha actual
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            currentDateElement.textContent = now.toLocaleDateString('es-ES', options);
+        }
 
         // Mostrar la tabla cuando los datos estén listos
         function showTable() {
@@ -226,7 +261,7 @@
                 }
                 showTable();
             }, {
-                onlyOnce: false // Escuchar cambios en tiempo real
+                onlyOnce: false
             });
         }
 
@@ -235,7 +270,7 @@
             const cells = tbody.getElementsByTagName('td');
             
             for (let cell of cells) {
-                if (cell.cellIndex > 1) { // Solo las celdas de estado (no nombres)
+                if (cell.cellIndex > 1) {
                     cell.addEventListener('click', function() {
                         const row = this.parentElement;
                         const rowIndex = Array.from(tbody.rows).indexOf(row);
@@ -275,26 +310,34 @@
             const report = {};
             const headers = Array.from(table.rows[1].cells).slice(2); // Segunda fila de encabezados
 
+            // Mapeo de columnas a secciones
+            const columnToSection = [
+                {start: 2, end: 2, section: 'RETAIL'},        // Columna 2: RETAIL - Recibo
+                {start: 3, end: 5, section: 'SIDERPERÚ'},      // Columnas 3-5: SIDERPERÚ
+                {start: 6, end: 7, section: 'OBRAS'},           // Columnas 6-7: OBRAS
+                {start: 8, end: 9, section: 'PRECIOS'},         // Columnas 8-9: PRECIOS
+                {start: 10, end: 11, section: 'INDEPENDIENTES'}, // Columnas 10-11: INDEPENDIENTES
+                {start: 12, end: 13, section: 'PLANNING'}       // Columnas 12-13: PLANNING
+            ];
+
             for (let i = 0; i < tbody.rows.length; i++) {
                 const controller = tbody.rows[i].cells[0].textContent;
                 const supervisor = tbody.rows[i].cells[1].textContent;
-                const statuses = Array.from(tbody.rows[i].cells).slice(2).map(cell => cell.className);
+                const statusCells = Array.from(tbody.rows[i].cells).slice(2);
 
-                headers.forEach((header, index) => {
-                    if (statuses[index] === 'cross') { // Solo procesa las casillas con X
-                        const sectionMap = {
-                            'Recibo': 'RETAIL',
-                            'Encuestas': 'SIDERPERÚ',
-                            'Compras': 'SIDERPERÚ',
-                            'Material POP': 'SIDERPERÚ',
-                            'Recibidas': 'OBRAS',
-                            'Enviadas': 'OBRAS',
-                            'Recibido': index === 8 ? 'PRECIOS' : (index === 10 ? 'INDEPENDIENTES' : (index === 12 ? 'PLANNING' : '')),
-                            'Enviado': index === 9 ? 'PRECIOS' : (index === 11 ? 'INDEPENDIENTES' : (index === 13 ? 'PLANNING' : ''))
-                        };
-                        const section = sectionMap[header.textContent];
-                        if (section) {
-                            const fullHeader = `${section} ${header.textContent}`;
+                statusCells.forEach((cell, cellIndex) => {
+                    const globalIndex = cellIndex + 2; // +2 porque empezamos desde la columna 2
+                    
+                    if (cell.classList.contains('cross')) {
+                        // Encontrar a qué sección pertenece esta columna
+                        const sectionInfo = columnToSection.find(s => 
+                            globalIndex >= s.start && globalIndex <= s.end
+                        );
+                        
+                        if (sectionInfo) {
+                            const header = headers[cellIndex].textContent;
+                            const fullHeader = `${sectionInfo.section} - ${header}`;
+                            
                             if (!report[fullHeader]) report[fullHeader] = {};
                             if (!report[fullHeader][controller]) report[fullHeader][controller] = [];
                             report[fullHeader][controller].push(supervisor);
@@ -303,21 +346,61 @@
                 });
             }
 
-            let reportHtml = '<h4 class="text-center">Reporte de Faltantes:</h4>';
+            let reportHtml = '<h4 class="text-center mb-4">Reporte de Faltantes</h4>';
+            
             if (Object.keys(report).length === 0) {
-                reportHtml += '<p class="text-center text-success">No hay elementos faltantes.</p>';
+                reportHtml += '<div class="alert alert-success text-center">No hay elementos faltantes.</div>';
             } else {
+                // Colores para cada sección
+                const sectionColors = {
+                    'RETAIL': '#c3e6cb',
+                    'SIDERPERÚ': '#ffcccc',
+                    'OBRAS': '#cce5ff',
+                    'PRECIOS': '#e6cce6',
+                    'INDEPENDIENTES': '#cceeff',
+                    'PLANNING': '#ffe6cc'
+                };
+
+                // Agrupar por sección principal
+                const groupedReport = {};
                 for (let header in report) {
-                    for (let controller in report[header]) {
-                        const supervisors = report[header][controller].join(', ');
-                        reportHtml += `<p>Falta <strong>${header}</strong> de ${controller} faltan los supervisores: ${supervisors}</p>`;
+                    const mainSection = header.split(' - ')[0];
+                    if (!groupedReport[mainSection]) {
+                        groupedReport[mainSection] = {};
                     }
+                    groupedReport[mainSection][header] = report[header];
+                }
+
+                // Generar HTML para cada sección
+                for (let section in groupedReport) {
+                    reportHtml += `<div class="report-section">
+                        <div class="report-header" style="background-color: ${sectionColors[section]}">${section}</div>`;
+                    
+                    for (let header in groupedReport[section]) {
+                        const task = header.split(' - ')[1];
+                        reportHtml += `<div class="mb-3">
+                            <h5>${task}</h5>`;
+                        
+                        for (let controller in groupedReport[section][header]) {
+                            const supervisors = groupedReport[section][header][controller].join(', ');
+                            reportHtml += `<div class="report-item">
+                                <strong>Controller:</strong> ${controller}<br>
+                                <span class="report-supervisors">Supervisores: ${supervisors}</span>
+                            </div>`;
+                        }
+                        
+                        reportHtml += `</div>`;
+                    }
+                    
+                    reportHtml += `</div>`;
                 }
             }
+            
             document.getElementById('report').innerHTML = reportHtml;
         });
 
         // Inicializar la aplicación
+        updateCurrentDate();
         setupCellClickEvents();
         loadState();
     </script>
