@@ -69,7 +69,7 @@
             <thead>
                 <tr class="section-header">
                     <th colspan="2"></th>
-                    <th colspan="1" style="background-color: #c3e6cb;">RETAIL</th>
+                    <th colspan="2" style="background-color: #c3e6cb;">RETAIL</th>
                     <th colspan="3" style="background-color: #ffcccc;">SIDERPERÚ</th>
                     <th colspan="2" style="background-color: #cce5ff;">OBRAS</th>
                     <th colspan="2" style="background-color: #e6cce6;">PRECIOS</th>
@@ -79,7 +79,8 @@
                 <tr>
                     <th>Controller</th>
                     <th>Supervisor</th>
-                    <th>Recibo</th>
+                    <th>Enviado</th>
+                    <th>Recibido</th>
                     <th>Encuestas</th>
                     <th>Compras</th>
                     <th>Material POP</th>
@@ -312,12 +313,12 @@
 
             // Mapeo de columnas a secciones
             const columnToSection = [
-                {start: 2, end: 2, section: 'RETAIL'},        // Columna 2: RETAIL - Recibo
-                {start: 3, end: 5, section: 'SIDERPERÚ'},      // Columnas 3-5: SIDERPERÚ
-                {start: 6, end: 7, section: 'OBRAS'},           // Columnas 6-7: OBRAS
-                {start: 8, end: 9, section: 'PRECIOS'},         // Columnas 8-9: PRECIOS
-                {start: 10, end: 11, section: 'INDEPENDIENTES'}, // Columnas 10-11: INDEPENDIENTES
-                {start: 12, end: 13, section: 'PLANNING'}       // Columnas 12-13: PLANNING
+                {start: 2, end: 3, section: 'RETAIL'},        // Columnas 2-3: RETAIL (Enviado y Recibido)
+            {start: 4, end: 6, section: 'SIDERPERÚ'},      // Columnas 4-6: SIDERPERÚ
+            {start: 7, end: 8, section: 'OBRAS'},          // Columnas 7-8: OBRAS
+            {start: 9, end: 10, section: 'PRECIOS'},       // Columnas 9-10: PRECIOS
+            {start: 11, end: 12, section: 'INDEPENDIENTES'},// Columnas 11-12: INDEPENDIENTES
+            {start: 13, end: 14, section: 'PLANNING'}      // Columnas 13-14: PLANNING
             ];
 
             for (let i = 0; i < tbody.rows.length; i++) {
