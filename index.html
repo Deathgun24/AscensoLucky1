@@ -54,6 +54,49 @@
             font-style: italic;
             color: #6c757d;
         }
+        .clear-btn {
+            padding: 0.2rem 0.4rem;
+            font-size: 0.8rem;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .column-header {
+            text-align: center;
+            min-height: 40px;
+            min-width: 150px;
+            padding: 5px;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        .button-row th {
+            text-align: center;
+            min-width: 150px;
+            padding: 5px;
+        }
+        #statusTable th, #statusTable td {
+            min-width: 150px;
+            padding: 5px;
+        }
+        .table-container {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            margin: 0;
+            padding: 0;
+        }
+        #statusTable {
+            width: 100%;
+            table-layout: auto;
+        }
+        .container {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body style="background-color: #ab49cc;">
@@ -65,142 +108,139 @@
         <div id="loadingIndicator" class="text-center mb-3">
             <span class="loading"></span> Cargando datos...
         </div>
-        <table id="statusTable" class="table table-bordered table-hover table-clickable" style="display: none; background-color: white;">
-            <thead>
-                <tr class="section-header">
-                    <th colspan="2"></th>
-                    <th colspan="2" style="background-color: #c3e6cb;">RETAIL</th>
-                    <th colspan="3" style="background-color: #ffcccc;">SIDERPERÚ</th>
-                    <th colspan="2" style="background-color: #cce5ff;">OBRAS</th>
-                    <th colspan="2" style="background-color: #e6cce6;">PRECIOS</th>
-                    <th colspan="2" style="background-color: #cceeff;">INDEPENDIENTES</th>
-                    <th colspan="2" style="background-color: #ffe6cc;">PLANNING</th>
-                </tr>
-                <tr>
-                    <th>Controller</th>
-                    <th>Supervisor</th>
-                    <th>Enviado</th>
-                    <th>Recibido</th>
-                    <th>Encuestas</th>
-                    <th>Compras</th>
-                    <th>Material POP</th>
-                    <th>Recibidas</th>
-                    <th>Enviadas</th>
-                    <th>Recibido</th>
-                    <th>Enviado</th>
-                    <th>Recibido</th>
-                    <th>Enviado</th>
-                    <th>Recibido</th>
-                    <th>Enviado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>Aydee Teofila Humaran Iasto</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>Deborah Caballero Gutierrez</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>GICELA MARLENI PICHILINGUE MORENO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>JACKELINE TATIANA CHERRES BRUNO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>JOSE MANUEL INOÑAN VALDIVIEZO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>LUCERO ELIZABETH MALAVER TAFUR</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>PILAR GRACIELA DOROTEO ALVARADO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>KAREN YEMIMA TAMI PISCOYA</td>
-                    <td>CARMEN MARTHA BENITEZ CUCHO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>LUZMILA ANTONIO GARCIA</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>KAREN YEMIMA TAMI PISCOYA</td>
-                    <td>MARLENY ROSALIA PEREZ SOLANO</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>KAREN YEMIMA TAMI PISCOYA</td>
-                    <td>NANCY KARINA ORE HUAYTALLA</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>KAREN YEMIMA TAMI PISCOYA</td>
-                    <td>SUSAN CARLA NEYRA ANCHANTTE</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>KAREN YEMIMA TAMI PISCOYA</td>
-                    <td>YVETTE YVONNE HERNANDEZ COLAN</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>CESAR LUIS PANDURO MELENDEZ</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>DAYSI CARINA MORON ALMENGOR</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
-                    <td>FRANCIS PAUL RIOS ZUÑIGA</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>HENRY DAVID LOPEZ REATEGUI</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <td>YULIANHA ROSALLY CASTILLO JULCA</td>
-                    <td>MARICARMEN AYALA ELME</td>
-                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-                <!-- Resto de las filas... -->
-            </tbody>
-        </table>
-        <div class="text-center">
-            <button id="generateReportBtn" class="btn btn-primary">Generar Reporte Faltantes</button>
+        <div class="table-container">
+            <table id="statusTable" class="table table-bordered table-hover table-clickable" style="display: none; background-color: white;">
+                <thead>
+                    <tr class="section-header">
+                        <th colspan="2"></th>
+                        <th colspan="2" style="background-color: #c3e6cb;">RETAIL</th>
+                        <th colspan="3" style="background-color: #ffcccc;">SIDERPERÚ</th>
+                        <th colspan="2" style="background-color: #cce5ff;">OBRAS</th>
+                        <th colspan="2" style="background-color: #e6cce6;">PRECIOS</th>
+                        <th colspan="2" style="background-color: #cceeff;">INDEPENDIENTES</th>
+                        <th colspan="2" style="background-color: #ffe6cc;">PLANNING</th>
+                    </tr>
+                    <tr id="headerRow">
+                        <th class="column-header">Controller</th>
+                        <th class="column-header">Supervisor</th>
+                        <!-- Los encabezados de columna se generarán dinámicamente -->
+                    </tr>
+                    <tr id="buttonRow" class="button-row">
+                        <th></th>
+                        <th></th>
+                        <!-- Los botones de limpiar se generarán dinámicamente -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>Aydee Teofila Humaran Iasto</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>Deborah Caballero Gutierrez</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>GICELA MARLENI PICHILINGUE MORENO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>JACKELINE TATIANA CHERRES BRUNO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>JOSE MANUEL INOÑAN VALDIVIEZO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>LUCERO ELIZABETH MALAVER TAFUR</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>PILAR GRACIELA DOROTEO ALVARADO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>KAREN YEMIMA TAMI PISCOYA</td>
+                        <td>CARMEN MARTHA BENITEZ CUCHO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>LUZMILA ANTONIO GARCIA</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>KAREN YEMIMA TAMI PISCOYA</td>
+                        <td>MARLENY ROSALIA PEREZ SOLANO</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>KAREN YEMIMA TAMI PISCOYA</td>
+                        <td>NANCY KARINA ORE HUAYTALLA</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>KAREN YEMIMA TAMI PISCOYA</td>
+                        <td>SUSAN CARLA NEYRA ANCHANTTE</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>KAREN YEMIMA TAMI PISCOYA</td>
+                        <td>YVETTE YVONNE HERNANDEZ COLAN</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>CESAR LUIS PANDURO MELENDEZ</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>DAYSI CARINA MORON ALMENGOR</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>ELIZABETH CRISTINA LLALLICO LOPEZ</td>
+                        <td>FRANCIS PAUL RIOS ZUÑIGA</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>HENRY DAVID LOPEZ REATEGUI</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>YULIANHA ROSALLY CASTILLO JULCA</td>
+                        <td>MARICARMEN AYALA ELME</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-3">
+            <button id="generateReportBtn" class="btn btn-primary me-2">Generar Reporte Faltantes</button>
+            <button id="captureTableBtn" class="btn btn-success">Capturar Tabla como Imagen</button>
         </div>
         <div id="report" class="mt-4"></div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         // Configuración de Firebase
         const firebaseConfig = {
@@ -220,9 +260,79 @@
         const tableRef = ref(database, 'tableState');
 
         const table = document.getElementById('statusTable');
+        const headerRow = document.getElementById('headerRow');
+        const buttonRow = document.getElementById('buttonRow');
         const tbody = table.getElementsByTagName('tbody')[0];
         const loadingIndicator = document.getElementById('loadingIndicator');
         const currentDateElement = document.getElementById('currentDate');
+
+        // Nombres de las columnas (13 columnas dinámicas)
+        const columnNames = [
+            'Enviado', 'Recibido', 
+            'Encuestas', 'Compras', 'Material POP', 
+            'Recibidas', 'Enviadas', 
+            'Recibido', 'Enviado', 
+            'Recibido', 'Enviado', 
+            'Recibido', 'Enviado'
+        ];
+
+        // Crear encabezados de columna y botones de limpiar
+        function createColumnHeaders() {
+            // Limpiar encabezados existentes (excepto las primeras 2 columnas)
+            while (headerRow.cells.length > 2) {
+                headerRow.deleteCell(2);
+            }
+            while (buttonRow.cells.length > 2) {
+                buttonRow.deleteCell(2);
+            }
+            
+            // Agregar encabezados y botones
+            columnNames.forEach((name, index) => {
+                // Crear celda para el encabezado
+                const thHeader = document.createElement('th');
+                thHeader.className = 'column-header';
+                thHeader.textContent = name;
+                headerRow.appendChild(thHeader);
+
+                // Crear celda para el botón
+                const thButton = document.createElement('th');
+                thButton.className = 'button-row';
+                const button = document.createElement('button');
+                button.className = 'btn btn-sm btn-outline-danger clear-btn';
+                button.title = 'Limpiar toda la columna';
+                button.innerHTML = '<i class="fas fa-times"></i>';
+                button.onclick = function(e) {
+                    e.stopPropagation();
+                    clearColumn(index + 2);
+                };
+                thButton.appendChild(button);
+                buttonRow.appendChild(thButton);
+            });
+        }
+
+        // Limpiar toda una columna
+        function clearColumn(columnIndex) {
+            if (confirm('¿Estás seguro de que quieres limpiar toda esta columna?')) {
+                const updates = {};
+                
+                for (let i = 0; i < tbody.rows.length; i++) {
+                    const key = `${i}-${columnIndex}`;
+                    updates[`tableState/${key}`] = null;
+                    
+                    // Limpiar visualmente
+                    const cell = tbody.rows[i].cells[columnIndex];
+                    cell.innerHTML = '';
+                    cell.classList.remove('check', 'cross');
+                }
+                
+                // Actualizar Firebase
+                update(ref(database), updates)
+                    .catch((error) => {
+                        console.error("Error al limpiar columna:", error);
+                        alert("Error al limpiar la columna. Por favor recarga la página.");
+                    });
+            }
+        }
 
         // Mostrar fecha actual
         function updateCurrentDate() {
@@ -268,14 +378,17 @@
 
         // Configurar eventos de clic para las celdas
         function setupCellClickEvents() {
-            const cells = tbody.getElementsByTagName('td');
-            
-            for (let cell of cells) {
-                if (cell.cellIndex > 1) {
+            for (let i = 0; i < tbody.rows.length; i++) {
+                const row = tbody.rows[i];
+                for (let j = 2; j < row.cells.length; j++) {
+                    const cell = row.cells[j];
+                    // Debug: Confirmar que se agrega el listener a la última columna
+                    if (j === 14) {
+                        console.log(`Adding click listener to cell at row ${i}, column ${j} (Planning - Enviado)`);
+                    }
                     cell.addEventListener('click', function() {
-                        const row = this.parentElement;
-                        const rowIndex = Array.from(tbody.rows).indexOf(row);
-                        const cellIndex = this.cellIndex;
+                        const rowIndex = i;
+                        const cellIndex = j;
                         const key = `${rowIndex}-${cellIndex}`;
                         
                         if (this.classList.contains('check')) {
@@ -309,16 +422,16 @@
         // Generar reporte
         document.getElementById('generateReportBtn').addEventListener('click', function() {
             const report = {};
-            const headers = Array.from(table.rows[1].cells).slice(2); // Segunda fila de encabezados
+            const headers = Array.from(table.rows[1].cells).slice(2);
 
             // Mapeo de columnas a secciones
             const columnToSection = [
-                {start: 2, end: 3, section: 'RETAIL'},        // Columnas 2-3: RETAIL (Enviado y Recibido)
-            {start: 4, end: 6, section: 'SIDERPERÚ'},      // Columnas 4-6: SIDERPERÚ
-            {start: 7, end: 8, section: 'OBRAS'},          // Columnas 7-8: OBRAS
-            {start: 9, end: 10, section: 'PRECIOS'},       // Columnas 9-10: PRECIOS
-            {start: 11, end: 12, section: 'INDEPENDIENTES'},// Columnas 11-12: INDEPENDIENTES
-            {start: 13, end: 14, section: 'PLANNING'}      // Columnas 13-14: PLANNING
+                {start: 2, end: 3, section: 'RETAIL'},
+                {start: 4, end: 6, section: 'SIDERPERÚ'},
+                {start: 7, end: 8, section: 'OBRAS'},
+                {start: 9, end: 10, section: 'PRECIOS'},
+                {start: 11, end: 12, section: 'INDEPENDIENTES'},
+                {start: 13, end: 14, section: 'PLANNING'}
             ];
 
             for (let i = 0; i < tbody.rows.length; i++) {
@@ -327,10 +440,9 @@
                 const statusCells = Array.from(tbody.rows[i].cells).slice(2);
 
                 statusCells.forEach((cell, cellIndex) => {
-                    const globalIndex = cellIndex + 2; // +2 porque empezamos desde la columna 2
+                    const globalIndex = cellIndex + 2;
                     
                     if (cell.classList.contains('cross')) {
-                        // Encontrar a qué sección pertenece esta columna
                         const sectionInfo = columnToSection.find(s => 
                             globalIndex >= s.start && globalIndex <= s.end
                         );
@@ -352,7 +464,6 @@
             if (Object.keys(report).length === 0) {
                 reportHtml += '<div class="alert alert-success text-center">No hay elementos faltantes.</div>';
             } else {
-                // Colores para cada sección
                 const sectionColors = {
                     'RETAIL': '#c3e6cb',
                     'SIDERPERÚ': '#ffcccc',
@@ -362,7 +473,6 @@
                     'PLANNING': '#ffe6cc'
                 };
 
-                // Agrupar por sección principal
                 const groupedReport = {};
                 for (let header in report) {
                     const mainSection = header.split(' - ')[0];
@@ -372,7 +482,6 @@
                     groupedReport[mainSection][header] = report[header];
                 }
 
-                // Generar HTML para cada sección
                 for (let section in groupedReport) {
                     reportHtml += `<div class="report-section">
                         <div class="report-header" style="background-color: ${sectionColors[section]}">${section}</div>`;
@@ -400,7 +509,33 @@
             document.getElementById('report').innerHTML = reportHtml;
         });
 
+        // Capturar tabla como imagen
+        document.getElementById('captureTableBtn').addEventListener('click', function() {
+            const table = document.getElementById('statusTable');
+            // Asegurar que la tabla esté visible
+            table.style.display = 'table';
+            
+            // Usar html2canvas para capturar la tabla
+            html2canvas(table, {
+                scrollX: 0,
+                scrollY: 0,
+                width: table.scrollWidth, // Capturar todo el ancho de la tabla
+                height: table.scrollHeight, // Capturar toda la altura de la tabla
+                scale: 2 // Mejorar la resolución
+            }).then(canvas => {
+                // Crear un enlace para descargar la imagen
+                const link = document.createElement('a');
+                link.download = 'tabla_status_unacem.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(error => {
+                console.error("Error al capturar la tabla:", error);
+                alert("Error al capturar la tabla. Por favor intenta de nuevo.");
+            });
+        });
+
         // Inicializar la aplicación
+        createColumnHeaders();
         updateCurrentDate();
         setupCellClickEvents();
         loadState();
